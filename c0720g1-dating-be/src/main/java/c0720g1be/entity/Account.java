@@ -48,11 +48,11 @@ public class Account {
     public Account() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -94,34 +94,6 @@ public class Account {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public boolean isEnable() {
-        return isEnable;
-    }
-
-    public void setEnable(boolean isEnable) {
-        this.isEnable = isEnable;
-    }
-
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
-
-    public boolean isAudience() {
-        return audience;
-    }
-
-    public void setAudience(boolean audience) {
-        this.audience = audience;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Boolean getEnable() {
