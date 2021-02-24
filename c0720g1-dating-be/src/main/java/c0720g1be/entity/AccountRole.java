@@ -20,11 +20,17 @@ public class AccountRole {
     public AccountRole() {
     }
 
-    public int getId() {
+    public AccountRole(Integer id, Account account, Role role) {
+        this.id = id;
+        this.account = account;
+        this.role = role;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
