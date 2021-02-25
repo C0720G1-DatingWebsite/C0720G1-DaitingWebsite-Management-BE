@@ -11,6 +11,9 @@ public class Account {
     String userName;
     String password;
     String fullName;
+    String encryptPw;
+    String verificationCode;
+    Boolean isEnabled;
     @Column(columnDefinition = "Date")
     String dateOfBirth;
     String address;
@@ -47,6 +50,15 @@ public class Account {
 
     public Account() {
     }
+
+    public Account(String userName, String encode, String encryptPw) {
+        this.userName = userName;
+        this.encryptPw = encryptPw;
+    }
+
+    public Account(String userName, String encode) {
+    }
+
 
     public int getId() {
         return id;
@@ -218,5 +230,29 @@ public class Account {
 
     public void setMaritalStatus(MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
+    }
+
+    public String getEncryptPw() {
+        return encryptPw;
+    }
+
+    public void setEncryptPw(String encryptPw) {
+        this.encryptPw = encryptPw;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
     }
 }
