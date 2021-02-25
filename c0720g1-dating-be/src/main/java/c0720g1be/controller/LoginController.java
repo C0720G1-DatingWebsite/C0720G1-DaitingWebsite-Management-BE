@@ -45,7 +45,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<?>authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
-
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
