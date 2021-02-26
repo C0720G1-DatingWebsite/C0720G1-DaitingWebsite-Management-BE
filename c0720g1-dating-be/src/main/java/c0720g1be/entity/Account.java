@@ -1,5 +1,7 @@
 package c0720g1be.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -25,11 +27,14 @@ public class Account {
     String dateRegister;
     @Column(columnDefinition = "TEXT")
     String backgroundImage;
+
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "country_id")
     Country country;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn (name = "city_id")
     City city;
 
@@ -38,10 +43,12 @@ public class Account {
     Job job;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn (name = "status_id")
     Status status;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn (name = "marital_status_id")
     MaritalStatus maritalStatus;
 
