@@ -19,12 +19,12 @@ public class ChangePasswordController {
     /**
      * Võ Thành Tín: ChangePassword
      */
-    @RequestMapping(value = "/change-password/{id}/{pass}", method = RequestMethod.PATCH)
+    @PutMapping(value = "/change-password/{id}/{pass}")
     public ResponseEntity<String> changePassword(@PathVariable("id") Integer id, @PathVariable("pass") String password) {
         if (iChangePasswordService.changePassword(password, id)) {
             return new ResponseEntity<String>(password,HttpStatus.OK);
         }
-        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>(password,HttpStatus.BAD_REQUEST);
     }
 
 
@@ -35,12 +35,6 @@ public class ChangePasswordController {
     @ResponseBody
     public Boolean checkPassword(@PathVariable Integer id,@PathVariable String pass){
         Account account = this.iChangePasswordService.findAccountById(id);
-//        if(account.getPassword().equals(pass)){
-//            return true;
-//
-//        }else {
-//            return false;
-//        }
         return account.getPassword().equals(pass);
     }
 
