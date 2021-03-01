@@ -7,6 +7,7 @@ public class CommentDTO {
     Integer postId;
     Integer accountId;
     Integer commentId;
+    Boolean deleteFlag;
 
     public CommentDTO() {
     }
@@ -57,5 +58,13 @@ public class CommentDTO {
 
     public void setCommentId(Integer commentId) {
         this.commentId = commentId;
+    }
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 }
