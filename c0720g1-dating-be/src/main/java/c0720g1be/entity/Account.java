@@ -27,6 +27,8 @@ public class Account {
     String dateRegister;
     @Column(columnDefinition = "TEXT")
     String backgroundImage;
+    @Column
+    String vetifyCode;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
@@ -153,6 +155,14 @@ public class Account {
 
     public void setBackgroundImage(String backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    public String getVetifyCode() {
+        return vetifyCode;
+    }
+
+    public void setVetifyCode(String vetifyCode) {
+        this.vetifyCode = vetifyCode;
     }
 
     public Country getCountry() {
