@@ -4,13 +4,11 @@ public class SuggestionToMakeFriends {
     private String hobbiesName;
     private String cityName;
     private Integer accountId;
-    private Integer size;
 
-    public SuggestionToMakeFriends(String hobbiesName, String cityName, Integer accountId, Integer size) {
+    public SuggestionToMakeFriends(String hobbiesName, String cityName, Integer accountId) {
         this.hobbiesName = hobbiesName;
         this.cityName = cityName;
         this.accountId = accountId;
-        this.size = size;
     }
 
     public SuggestionToMakeFriends() {
@@ -20,31 +18,23 @@ public class SuggestionToMakeFriends {
         return hobbiesName;
     }
 
-    public void setHobbiesName(String hobbiesName) {
-        this.hobbiesName = hobbiesName;
-    }
-
     public String getCityName() {
         return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
     }
 
     public Integer getAccountId() {
         return accountId;
     }
 
+    public void setHobbiesName(String hobbiesName) {
+        this.hobbiesName = hobbiesName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     public void setAccountId(Integer accountId) {
         this.accountId = accountId;
-    }
-
-    public Integer getSize() {
-        return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
     }
 }

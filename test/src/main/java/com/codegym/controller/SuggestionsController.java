@@ -22,9 +22,6 @@ public class SuggestionsController {
     @Autowired
     private ISuggestionsService iSuggestionsService;
 
-    /**
-     * TuNH getAccountInformation
-     **/
     @RequestMapping(value = "/getAccountInformation/{accountId}", method = RequestMethod.GET)
     public ResponseEntity<AccountDTO> getAccountInformation(@PathVariable Integer accountId) {
         AccountDTO accountDTO = this.iSuggestionsService.getAccountInformation(accountId);
@@ -34,24 +31,19 @@ public class SuggestionsController {
         return new ResponseEntity<AccountDTO>(accountDTO, HttpStatus.OK);
     }
 
-    /**
-     * TuNH suggestionToMakeFriends
-     **/
     @RequestMapping(value = "/suggestionToMakeFriends", method = RequestMethod.POST)
     public ResponseEntity<List<SuggestionToMakeFriendsDTO>> suggestionToMakeFriends(@Valid @RequestBody SuggestionToMakeFriends suggestionToMakeFriends) {
-        List<SuggestionToMakeFriendsDTO> list = this.iSuggestionsService.suggestionToMakeFriends(suggestionToMakeFriends.getHobbiesName(), suggestionToMakeFriends.getCityName(), suggestionToMakeFriends.getAccountId(), suggestionToMakeFriends.getSize());
+        List<SuggestionToMakeFriendsDTO> list = this.iSuggestionsService.suggestionToMakeFriends(suggestionToMakeFriends.getHobbiesName(), suggestionToMakeFriends.getCityName(), suggestionToMakeFriends.getAccountId());
         if (list.isEmpty()) {
             return new ResponseEntity<List<SuggestionToMakeFriendsDTO>>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<SuggestionToMakeFriendsDTO>>(list, HttpStatus.OK);
     }
 
-    /**
-     * TuNH datingSuggestion
-     **/
+
     @RequestMapping(value = "/datingSuggestion", method = RequestMethod.POST)
     public ResponseEntity<List<SuggestionToMakeFriendsDTO>> datingSuggestion(@Valid @RequestBody SuggestedPairing suggestedPairing) {
-        List<SuggestionToMakeFriendsDTO> list = this.iSuggestionsService.datingSuggestion(suggestedPairing.getHobbiesName(), suggestedPairing.getCityName(), suggestedPairing.getGender(), suggestedPairing.getMaritalStatusId(), suggestedPairing.getAccountId(),suggestedPairing.getSize());
+        List<SuggestionToMakeFriendsDTO> list = this.iSuggestionsService.datingSuggestion(suggestedPairing.getHobbiesName(), suggestedPairing.getCityName(), suggestedPairing.getGender(), suggestedPairing.getMaritalStatusId(), suggestedPairing.getAccountId());
         if (list.isEmpty()) {
             return new ResponseEntity<List<SuggestionToMakeFriendsDTO>>(HttpStatus.NOT_FOUND);
         }
