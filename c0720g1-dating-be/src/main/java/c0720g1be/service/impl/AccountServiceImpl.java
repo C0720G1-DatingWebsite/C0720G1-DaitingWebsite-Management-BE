@@ -12,11 +12,17 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    /**
+     * PhuocTC
+     **/
     @Override
     public Account findByUsername(String username) {
         return accountRepository.findByUserName(username);
     }
 
+    /**
+     * PhuocTC
+     **/
     @Override
     public Account registerAccount(Account accountTemp) {
         return accountRepository.save(accountTemp);
