@@ -18,6 +18,9 @@ public class Account {
     String address;
     Boolean isEnable;
     Boolean gender;
+    String email;
+    @Column(columnDefinition = "DATE")
+    String dateUnban;
     Boolean audience;
     @Column(columnDefinition = "TEXT")
     String accountDescribe;
@@ -49,6 +52,22 @@ public class Account {
     MaritalStatus maritalStatus;
 
     public Account() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDateUnban() {
+        return dateUnban;
+    }
+
+    public void setDateUnban(String dateUnban) {
+        this.dateUnban = dateUnban;
     }
 
     public Integer getId() {
