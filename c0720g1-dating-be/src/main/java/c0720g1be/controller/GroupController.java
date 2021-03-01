@@ -43,4 +43,30 @@ public class GroupController {
                                                @PathVariable("name") String name) {
         return new ResponseEntity<>(this.userGroupService.findByNameContaining(name, pageable), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "get-group/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getGroup(@PathVariable("groupId") int groupId) {
+        return new ResponseEntity<>(this.userGroupService.findGroupById(groupId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "get-member-quantity/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getMemberQuantity(@PathVariable("groupId") int groupId) {
+        return new ResponseEntity<>(this.userGroupService.memberQuantity(groupId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "get-list-member-quantity", method = RequestMethod.GET)
+    public ResponseEntity<?> getListMemberQuantity() {
+        return new ResponseEntity<>(this.userGroupService.listMemberQuantity(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "get-post-group-quantity/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPostGroupQuantity(@PathVariable(name = "groupId") int groupId) {
+        return new ResponseEntity<>(this.userGroupService.postGroupQuantity(groupId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "list-member-group/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<?> listMember(@PageableDefault(size = 5) Pageable pageable,
+                                        @PathVariable int groupId) {
+        return new ResponseEntity<>(this.userGroupService.getListMember(groupId,pageable), HttpStatus.OK);
+    }
 }
