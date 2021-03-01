@@ -24,6 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * PhuocTC
+ **/
+
 @RestController
 @CrossOrigin("*")
 public class LoginController {
@@ -43,6 +47,9 @@ public class LoginController {
     @Autowired
     private AccountRoleService accountRoleService;
 
+    /**
+     * PhuocTC
+     **/
     @PostMapping("/login")
     public ResponseEntity<?>authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
         try {
@@ -57,10 +64,6 @@ public class LoginController {
         }
 
         Account account = accountService.findByUsername(jwtRequest.getUsername());
-
-        if (!account.getEnable()) {
-            return new ResponseEntity<>("Tài khoản của bạn đã bị khóa", HttpStatus.OK);
-        }
 
         List<AccountRole> accountRoleList = accountRoleService.findAllByAccount(account);
 
@@ -78,10 +81,15 @@ public class LoginController {
                         account.getId(),
                         account.getUserName(),
                         account.getAvatar(),
+                        account.getEnable(),
                         roleList),
                 HttpStatus.OK);
     }
 
+
+    /**
+     * PhuocTC
+     **/
     @PostMapping("/login-facebook")
     public ResponseEntity<?>authenticateForFacebook(@RequestBody Account accountTemp) {
 
@@ -102,9 +110,6 @@ public class LoginController {
 
         Account account = accountService.findByUsername(accountTemp.getUserName());
 
-        if (!account.getEnable()) {
-            return new ResponseEntity<>("Tài khoản của bạn đã bị khóa", HttpStatus.OK);
-        }
 
         List<AccountRole> accountRoleList = accountRoleService.findAllByAccount(account);
 
@@ -122,15 +127,21 @@ public class LoginController {
                         account.getId(),
                         account.getUserName(),
                         account.getAvatar(),
+                        account.getEnable(),
                         roleList),
                 HttpStatus.OK);
     }
 
+
+    /**
+     * PhuocTC
+     **/
     @PostMapping("/login-google")
     public ResponseEntity<?>authenticateForGoogle(@RequestBody Account accountTemp) {
 
         if (accountService.findByUsername(accountTemp.getUserName()) == null) {
             accountTemp.setEnable(true);
+            accountTemp.setPassword("");
             accountTemp = accountService.registerAccount(accountTemp);
 
             Role role = new Role();
@@ -147,9 +158,6 @@ public class LoginController {
 
         Account account = accountService.findByUsername(accountTemp.getUserName());
 
-        if (!account.getEnable()) {
-            return new ResponseEntity<>("Tài khoản của bạn đã bị khóa", HttpStatus.OK);
-        }
 
         List<AccountRole> accountRoleList = accountRoleService.findAllByAccount(account);
 
@@ -167,6 +175,7 @@ public class LoginController {
                         account.getId(),
                         account.getUserName(),
                         account.getAvatar(),
+                        account.getEnable(),
                         roleList),
                 HttpStatus.OK);
     }
