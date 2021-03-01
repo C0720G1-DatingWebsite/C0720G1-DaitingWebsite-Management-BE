@@ -18,6 +18,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,9 +156,7 @@ public class LoginController {
             accountRoleService.addRoleForAccount(accountRole);
         }
 
-
         Account account = accountService.findByUsername(accountTemp.getUserName());
-
 
         List<AccountRole> accountRoleList = accountRoleService.findAllByAccount(account);
 
@@ -180,18 +180,55 @@ public class LoginController {
     }
 
 
+    /**
+     * PhuocTC
+     **/
     @GetMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestParam String username){
-        Account account = accountService.findByUsername(username);
+    public ResponseEntity<?> forgotPassword(@RequestParam String username) throws UnsupportedEncodingException, MessagingException {
+        Account account = accountService.findByEmail(username);
 
         if (account != null) {
-            account.setVetifyCode(RandomString.make(64));
+
+            String code = RandomString.make(64);
+
+            while (accountService.findByVetifyCode(code) != null) {
+                code = RandomString.make(64);
+            }
+
+            account.setVetifyCode(code);
+            accountService.registerAccount(account);
+
+            accountService.sendMailForgotPassword(account);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    /**
+     * PhuocTC
+     **/
+    @GetMapping("/changed-password")
+    public ResponseEntity<?> changedPassword(@RequestParam String newPassword,
+                                             @RequestParam String vetifyCode) {
+        Account account = accountService.findByVetifyCode(vetifyCode);
+
+        if (account != null) {
+            account.setPassword(newPassword);
             accountService.registerAccount(account);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
-
+    @GetMapping("/check-vetify-password")
+    public ResponseEntity<?> checkChangedPassword(@RequestParam String vetifyCode) {
+        if (accountService.findByVetifyCode(vetifyCode) != null) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 }
