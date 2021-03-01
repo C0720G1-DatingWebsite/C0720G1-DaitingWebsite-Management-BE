@@ -11,4 +11,8 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
      * PhuocTC
      **/
     Account findByUserName(String userName);
+
+    Account findByEmail(String email);
+
+    Account findByVetifyCode(String code);
 }
