@@ -27,10 +27,7 @@ public class Post {
 
     public Post() {
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    
 
     public String getImagePost() {
         return imagePost;
@@ -40,11 +37,11 @@ public class Post {
         this.imagePost = imagePost;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
