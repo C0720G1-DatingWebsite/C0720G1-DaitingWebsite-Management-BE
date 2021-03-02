@@ -52,7 +52,6 @@ public class LoginController {
      **/
     @PostMapping("/login")
     public ResponseEntity<?>authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
-        System.out.println(RandomString.make(64));
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -93,9 +92,17 @@ public class LoginController {
      **/
     @PostMapping("/login-facebook")
     public ResponseEntity<?>authenticateForFacebook(@RequestBody Account accountTemp) {
+        return getResponseEntity(accountTemp);
+    }
 
+
+    /**
+     * PhuocTC
+     **/
+    private ResponseEntity<?> getResponseEntity(Account accountTemp) {
         if (accountService.findByUsername(accountTemp.getUserName()) == null) {
             accountTemp.setEnable(true);
+            accountTemp.setPassword(RandomString.make(64));
             accountTemp = accountService.registerAccount(accountTemp);
 
             Role role = new Role();
@@ -139,44 +146,7 @@ public class LoginController {
      **/
     @PostMapping("/login-google")
     public ResponseEntity<?>authenticateForGoogle(@RequestBody Account accountTemp) {
-
-        if (accountService.findByUsername(accountTemp.getUserName()) == null) {
-            accountTemp.setEnable(true);
-            accountTemp.setPassword("");
-            accountTemp = accountService.registerAccount(accountTemp);
-
-            Role role = new Role();
-            role.setId(2);
-            role.setName("ROLE_USER");
-
-            AccountRole accountRole = new AccountRole();
-            accountRole.setAccount(accountTemp);
-            accountRole.setRole(role);
-
-            accountRoleService.addRoleForAccount(accountRole);
-        }
-
-        Account account = accountService.findByUsername(accountTemp.getUserName());
-
-        List<AccountRole> accountRoleList = accountRoleService.findAllByAccount(account);
-
-        Map<Integer, String> roleList = new HashMap<>();
-        for (AccountRole accountRole : accountRoleList) {
-            roleList.put(accountRole.getRole().getId(), accountRole.getRole().getName());
-        }
-
-
-        final String token = jwtUtility.generateToken(userService.loadUserByUsername(accountTemp.getUserName()));
-
-        return new ResponseEntity<>(
-                new JwtResponse(
-                        token,
-                        account.getId(),
-                        account.getUserName(),
-                        account.getAvatar(),
-                        account.getEnable(),
-                        roleList),
-                HttpStatus.OK);
+        return getResponseEntity(accountTemp);
     }
 
 
