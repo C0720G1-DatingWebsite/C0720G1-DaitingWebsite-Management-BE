@@ -18,7 +18,7 @@ public class CreatePostServiceImpl implements ICreatePostService {
     @Override
     public Boolean createPost(Post post) {
         try {
-            createPostRepository.createPost(post.getContent(), post.getPostTime(), post.getAccount().getId(), post.getPolicy().getId());
+            createPostRepository.createPost(post.getContent(), post.getPostTime(), post.getAccount().getId(), post.getPolicy().getId(),post.getImagePost());
         } catch (Exception e){
             return false;
         }

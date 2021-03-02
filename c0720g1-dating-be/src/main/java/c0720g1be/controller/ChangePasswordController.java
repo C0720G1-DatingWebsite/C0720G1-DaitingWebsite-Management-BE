@@ -6,6 +6,7 @@ import c0720g1be.service.IChangePasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +22,7 @@ public class ChangePasswordController {
      */
     @PutMapping(value = "/change-password/{id}/{pass}")
     public ResponseEntity<String> changePassword(@PathVariable("id") Integer id, @PathVariable("pass") String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (iChangePasswordService.changePassword(password, id)) {
             return new ResponseEntity<String>(password,HttpStatus.OK);
         }
@@ -34,6 +36,7 @@ public class ChangePasswordController {
     @RequestMapping(value = "/check-password/{id}/{pass}", method = RequestMethod.GET)
     @ResponseBody
     public Boolean checkPassword(@PathVariable Integer id,@PathVariable String pass){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Account account = this.iChangePasswordService.findAccountById(id);
         return account.getPassword().equals(pass);
     }
