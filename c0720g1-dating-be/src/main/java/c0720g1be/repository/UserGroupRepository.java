@@ -36,7 +36,7 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Integer> {
     Integer postGroupQuantity(int groupId);
 
     @Transactional
-    @Query(value = "select a.id , a.avatar , a.background_image " +
+    @Query(value = "select a.id , a.avatar , a.background_image as backgroundImage, a.full_name as fullName " +
             "from `account` a " +
             "right join account_group abc on abc.account_id = a.id "+
             "where abc.group_id = ?1", nativeQuery = true)
