@@ -2,6 +2,9 @@ package c0720g1be.service;
 
 import c0720g1be.entity.Account;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
+
 public interface AccountService {
 
     /**
@@ -15,4 +18,16 @@ public interface AccountService {
     Account registerAccount(Account accountTemp);
 
     Account findById(Integer id);
+    /**
+     * PhuocTC
+     **/
+    Account findByEmail(String email);
+
+    /**
+     * PhuocTC
+     **/
+    Account findByVetifyCode(String code);
+
+
+    void sendMailForgotPassword(Account account) throws MessagingException, UnsupportedEncodingException;
 }

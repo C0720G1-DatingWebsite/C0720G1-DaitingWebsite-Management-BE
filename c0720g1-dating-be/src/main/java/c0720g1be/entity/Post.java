@@ -14,6 +14,7 @@ public class Post {
     int likeCount;
     String img;
 
+    String imagePost;
     @ManyToOne
     @JoinColumn(name = "account_id")
     Account account;
@@ -27,6 +28,15 @@ public class Post {
     Policy policy;
 
     public Post() {
+    }
+    
+
+    public String getImagePost() {
+        return imagePost;
+    }
+
+    public void setImagePost(String imagePost) {
+        this.imagePost = imagePost;
     }
 
     public Integer getId() {

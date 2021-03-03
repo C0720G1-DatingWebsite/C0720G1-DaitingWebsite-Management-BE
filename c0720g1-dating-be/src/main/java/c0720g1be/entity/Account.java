@@ -16,6 +16,9 @@ public class Account {
     String address;
     Boolean isEnable;
     Boolean gender;
+    String email;
+    @Column(columnDefinition = "DATE")
+    String dateUnban;
     Boolean audience;
     @Column(columnDefinition = "TEXT")
     String accountDescribe;
@@ -25,6 +28,8 @@ public class Account {
     String dateRegister;
     @Column(columnDefinition = "TEXT")
     String backgroundImage;
+    @Column
+    String vetifyCode;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
@@ -47,6 +52,22 @@ public class Account {
     MaritalStatus maritalStatus;
 
     public Account() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDateUnban() {
+        return dateUnban;
+    }
+
+    public void setDateUnban(String dateUnban) {
+        this.dateUnban = dateUnban;
     }
 
     public Integer getId() {
@@ -151,6 +172,14 @@ public class Account {
 
     public void setBackgroundImage(String backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    public String getVetifyCode() {
+        return vetifyCode;
+    }
+
+    public void setVetifyCode(String vetifyCode) {
+        this.vetifyCode = vetifyCode;
     }
 
     public Country getCountry() {
