@@ -54,7 +54,7 @@ public interface ISuggestionsRepository extends JpaRepository<Account, Integer> 
             "and account.id in ( select friend.friend_id from friend where friend.account_id = ?5) ) as mutualFriends\n" +
             "from account \n" +
             "join personal_hobbies on account.id = personal_hobbies.account_id \n" +
-            "join hobbies on personal_hobbies.hobbies_id = hobbies.id \n" +
+            "join hobbies on    personal_hobbies.hobbies_id = hobbies.id \n" +
             "join city on account.city_id = city.id\n" +
             "join marital_status on account.marital_status_id = marital_status.id\n" +
             "where (hobbies.name = ?1 or city.name = ?2) and account.gender = ?3 \n" +
