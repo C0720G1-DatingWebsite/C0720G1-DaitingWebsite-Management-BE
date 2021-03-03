@@ -131,6 +131,7 @@ public class LoginController {
 
         if (accountService.findByUsername(accountTemp.getUserName()) == null) {
             accountTemp.setEnable(true);
+            accountTemp.setPassword(" ");
             accountTemp = accountService.registerAccount(accountTemp);
 
             Role role = new Role();
