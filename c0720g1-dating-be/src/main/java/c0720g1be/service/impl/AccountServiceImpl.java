@@ -38,6 +38,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account findById(Integer id) {
+        return accountRepository.findByIdAccount(id);
+    }
+    
+    @Override
     public Account findByEmail(String email) {
         return accountRepository.findByEmail(email);
     }

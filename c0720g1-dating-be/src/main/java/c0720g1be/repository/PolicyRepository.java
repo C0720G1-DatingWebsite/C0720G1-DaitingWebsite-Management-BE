@@ -1,8 +1,5 @@
 package c0720g1be.repository;
-
-
 import c0720g1be.dto.IPolicyDTO;
-import c0720g1be.entity.Policy;
 import c0720g1be.entity.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

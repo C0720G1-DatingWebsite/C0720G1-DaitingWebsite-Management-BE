@@ -26,8 +26,8 @@ public interface PostRepository extends JpaRepository<Post,Integer> {
 
     @Query(value = "select * from post " +
             "join friend on post.account_id = friend.friend_id " +
-            "where friend.account_id = ? ORDER BY post.post_time DESC ",nativeQuery = true)
-    List<Post> findAllPost(Integer idAccount);
+            "where (friend.account_id = ?1  and post.policy_id != 3) || post.account_id = ?1 ORDER BY post.post_time DESC LIMIT ?2 ",nativeQuery = true)
+    List<Post> findAllPost(Integer idAccount,Integer size);
 
     @Query(value = "select * from Post where id = ?", nativeQuery = true)
     Post getByIdPost(Integer id);

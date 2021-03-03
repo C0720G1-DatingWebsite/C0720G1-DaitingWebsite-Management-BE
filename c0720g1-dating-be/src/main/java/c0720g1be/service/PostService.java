@@ -7,7 +7,7 @@ import java.util.List;
 /**
  */
 public interface PostService {
-    List<Post> getAllPost(Integer idAccount);
+    List<Post> getAllPost(Integer idAccount,Integer size);
     void editPost(Post post);
     void increaseLike(int id);
     void reductionLike(int id);

@@ -1,7 +1,5 @@
 package c0720g1be.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 
 @Entity

@@ -13,8 +13,8 @@ public class PostServiceImpl implements PostService {
     @Autowired
     PostRepository postRepository;
     @Override
-    public List<Post> getAllPost(Integer idAccount) {
-        return postRepository.findAllPost(idAccount);
+    public List<Post> getAllPost(Integer idAccount,Integer size) {
+        return postRepository.findAllPost(idAccount,size);
     }
 
     @Override

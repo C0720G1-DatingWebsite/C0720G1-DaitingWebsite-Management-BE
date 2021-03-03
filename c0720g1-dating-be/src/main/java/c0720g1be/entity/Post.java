@@ -12,7 +12,7 @@ public class Post {
     @Column(name = "post_time", columnDefinition = "DATETIME")
     String postTime;
     int likeCount;
-    String imagePost;
+    String img;
     @ManyToOne
     @JoinColumn(name = "account_id")
     Account account;
@@ -29,13 +29,6 @@ public class Post {
     }
 
 
-    public String getImagePost() {
-        return imagePost;
-    }
-
-    public void setImagePost(String imagePost) {
-        this.imagePost = imagePost;
-    }
 
     public Integer getId() {
         return id;
@@ -59,6 +52,14 @@ public class Post {
 
     public void setPostTime(String postTime) {
         this.postTime = postTime;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public int getLikeCount() {
