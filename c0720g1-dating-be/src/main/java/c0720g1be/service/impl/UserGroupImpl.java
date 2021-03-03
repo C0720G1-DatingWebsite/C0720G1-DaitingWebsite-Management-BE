@@ -56,4 +56,14 @@ public class UserGroupImpl implements UserGroupService {
     public Page<IMemberInfDTO> getListMember(Integer groupId, Pageable pageable) {
         return this.userGroupRepository.getListMember(groupId,pageable);
     }
+
+    @Override
+    public List<Integer> accountJoinedGroup(Integer accountId) {
+        return this.userGroupRepository.accountJoinedGroup(accountId);
+    }
+
+    @Override
+    public Page<IMemberInfDTO> searchMember(Integer groupId, String nameSearch, Pageable pageable) {
+        return this.userGroupRepository.searchMember(groupId,nameSearch,pageable);
+    }
 }

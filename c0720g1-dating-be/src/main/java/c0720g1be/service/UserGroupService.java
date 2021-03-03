@@ -21,7 +21,11 @@ public interface UserGroupService {
 
     List<Integer> listMemberQuantity();
 
-    Integer postGroupQuantity (int groupId);
+    Integer postGroupQuantity(int groupId);
 
     Page<IMemberInfDTO> getListMember(Integer groupId, Pageable pageable);
+
+    List<Integer> accountJoinedGroup(Integer accountId);
+
+    Page<IMemberInfDTO> searchMember(Integer groupId, String nameSearch, Pageable pageable);
 }
