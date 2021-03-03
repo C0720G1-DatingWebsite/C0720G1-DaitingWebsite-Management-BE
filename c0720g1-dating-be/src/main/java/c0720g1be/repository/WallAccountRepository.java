@@ -11,6 +11,6 @@ import javax.transaction.Transactional;
 @Repository
 public interface WallAccountRepository extends JpaRepository<Account, Integer> {
 
-    @Query(value = "select * from account where id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM `account` where `account`.`id` = ?1", nativeQuery = true)
     Account findByIdAccount(Integer id);
 }

@@ -18,10 +18,9 @@ public class ChangeAvatarController {
     /**
      * Võ Thành Tín: Change Avatar
      */
-    @RequestMapping(value = "/change-avatar/{id}/{avatar}", method = RequestMethod.PATCH)
-    public ResponseEntity<Account> changeAvatar(@PathVariable Integer id, @PathVariable String avatar){
-        if(iChangePasswordService.changeAvatar(avatar, id)){
-            return new ResponseEntity<Account>(HttpStatus.OK);
-        }return new ResponseEntity<Account>(HttpStatus.BAD_REQUEST);
+    @RequestMapping(value = "/change-avatar", method = RequestMethod.PATCH)
+    @ResponseBody
+    public boolean changeAvatar(@RequestParam Integer idAccount, @RequestParam(defaultValue = "") String avatar){
+        return iChangePasswordService.changeAvatar(avatar, idAccount);
     }
 }

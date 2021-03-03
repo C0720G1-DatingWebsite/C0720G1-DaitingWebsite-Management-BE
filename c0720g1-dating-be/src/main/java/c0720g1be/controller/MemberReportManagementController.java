@@ -1,13 +1,18 @@
 package c0720g1be.controller;
 
+import c0720g1be.dto.GetFeedbackDTO;
 import c0720g1be.dto.MemberDTO;
 import c0720g1be.dto.ReportMemberDTO;
 import c0720g1be.dto.ReportMemberInterfaceDTO;
 import c0720g1be.entity.Account;
+import c0720g1be.entity.Feedback;
 import c0720g1be.entity.ReportContent;
 import c0720g1be.service.AccountService;
 import c0720g1be.service.MemberReportManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -35,13 +40,24 @@ public class MemberReportManagementController {
     /*
     * HungDH - trang quan ly thanh vien
      */
-    @GetMapping("/member")
-    public ResponseEntity<List<MemberDTO>> getAllMember(){
-        List<MemberDTO> memberList = memberReportManagementService.findAllMember();
-        if (memberList.isEmpty()){
+    @RequestMapping(value = "/member", method=RequestMethod.GET)
+    public ResponseEntity<List<MemberDTO>> getAllMember(
+            @RequestParam(defaultValue = "") String userNameSearch,
+            @RequestParam(defaultValue = "") String dateOfBirthSearch,
+            @RequestParam(defaultValue = "") String dateRegisterSearch,
+            @RequestParam Integer size
+    ) {
+        List<MemberDTO> memberDTOList;
+        if (!userNameSearch.equals("") || !dateOfBirthSearch.equals("") || !dateRegisterSearch.equals("")) {
+            return new ResponseEntity<>(memberReportManagementService.findAccountByUserNameAndDateOfBirthAndDateOfBirth
+                    ("%" + userNameSearch + "%", "%" + dateOfBirthSearch + "%", "%" + dateRegisterSearch + "%"), (HttpStatus.OK));
+        } else {
+            memberDTOList = memberReportManagementService.findAllMember(size);
+        }
+        if (memberDTOList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(memberList, HttpStatus.OK);
+        return new ResponseEntity<>(memberDTOList, HttpStatus.OK);
     }
     /*
     HungDH - hien thi list report content
@@ -79,6 +95,9 @@ public class MemberReportManagementController {
     @GetMapping("/send-warning-message/{id}")
     public ResponseEntity<?> sendEmail(@PathVariable Integer id) throws MessagingException, UnsupportedEncodingException {
         Account account = memberReportManagementService.findMemberById(id);
+        if (!account.getEnable()){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         String subject = "Cảnh báo từ DATING WEBSITE";
         String mailContent = "";
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -86,8 +105,7 @@ public class MemberReportManagementController {
         helper.setTo(account.getEmail());
         helper.setFrom("hungdhpd01429@gmail.com","DATING WEBSITE - Website hẹn hò lớn nhất thế giới!");
         helper.setSubject(subject);
-        mailContent = "<p sytle='color:red;'>Xin chào " + account.getUserName() + " ,<p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>" +
-                "<h3><a href=''>Link Xác thực( nhấn vào đây)!</a></h3>";
+        mailContent = "<p sytle='color:red;'>Xin chào " + account.getUserName() + " ,<p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>";
         helper.setText(mailContent, true);
         javaMailSender.send(message);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -155,23 +173,8 @@ public class MemberReportManagementController {
         memberReportManagementService.lockAccountForever(accountId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//    @GetMapping("/unlock/{accountId}")
-//    public ResponseEntity<?> unlockAccount(@PathVariable Integer accountId){
-//
-//        Date dateNow = new Date();
-//        Optional<Account> account = Optional.of(new Account());
-//        account = memberReportManagementService.findById(accountId);
-//        if (account.get().getDateUnban() == dateNow.toString()){
-//            account.get().setEnable(false);
-//            memberReportManagementService.unlockAccount();
-//        }
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
     @PostMapping("/send-report-feedback-account")
     public ResponseEntity<?> sendReportFeedbackAccount(@RequestBody ReportMemberDTO report){
-//        Optional<Account> account = Optional.of(new Account());
-//        account = memberReportManagementService.f(accountTarget);
-
         Account accountTarget = accountService.findByUsername(report.getAccountTarget());
         Account accountVictim = accountService.findByUsername(report.getAccountVictim());
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
@@ -181,5 +184,12 @@ public class MemberReportManagementController {
                 accountVictim.getId(), Integer.parseInt(report.getReportContent()));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
+    @GetMapping("/get-feedback")
+    public ResponseEntity<List<GetFeedbackDTO>> findAllFeedback(){
+        List<GetFeedbackDTO> getFeedbackDTOS = memberReportManagementService.findAllFeedback();
+        if (getFeedbackDTOS.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(getFeedbackDTOS, HttpStatus.OK);
+    }
 }

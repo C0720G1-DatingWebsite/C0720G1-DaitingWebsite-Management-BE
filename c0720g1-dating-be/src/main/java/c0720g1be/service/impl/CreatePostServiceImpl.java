@@ -6,6 +6,8 @@ import c0720g1be.service.ICreatePostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class CreatePostServiceImpl implements ICreatePostService {
     @Autowired
@@ -16,9 +18,9 @@ public class CreatePostServiceImpl implements ICreatePostService {
      * Võ Thành Tín: Create New Post
      */
     @Override
-    public Boolean createPost(Post post) {
+    public Boolean createPost(String content, Integer accountId, Integer policyId, String image) {
         try {
-            createPostRepository.createPost(post.getContent(), post.getPostTime(), post.getAccount().getId(), post.getPolicy().getId(),post.getImagePost());
+            createPostRepository.createPost(content, LocalDateTime.now().toString(), accountId, policyId, image);
         } catch (Exception e){
             return false;
         }

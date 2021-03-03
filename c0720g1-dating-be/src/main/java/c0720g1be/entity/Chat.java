@@ -30,7 +30,6 @@ public class Chat {
         this.id = id;
     }
 
-
     public String getContent() {
         return content;
     }

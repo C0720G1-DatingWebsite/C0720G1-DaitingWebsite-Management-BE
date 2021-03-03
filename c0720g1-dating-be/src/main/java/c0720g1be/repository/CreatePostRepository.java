@@ -16,8 +16,8 @@ public interface CreatePostRepository extends JpaRepository<Post,Integer> {
      * Võ Thành Tín: Create New Post
      */
     @Modifying(clearAutomatically = true)
-    @Query(value = "insert into post(post.content, post.like_count, post.post_time, post.account_id, post.policy_id, post.image_post) " +
-            "value (?1,?2,0,?3,?4,?5)",nativeQuery = true)
+    @Query(value = "insert into post(post.content, post.post_time, post.account_id, post.policy_id, post.image_post, post.like_count) " +
+            "value (?1,?2,?3,?4,?5,0)",nativeQuery = true)
     void createPost(String content, String postTime, Integer accountId, Integer policyId, String image);
 }
 

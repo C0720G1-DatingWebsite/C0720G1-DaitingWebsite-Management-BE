@@ -1,9 +1,8 @@
 package c0720g1be.controller;
 
 
+import c0720g1be.dto.CreatePostDTO;
 import c0720g1be.dto.IPolicyDTO;
-import c0720g1be.entity.Policy;
-import c0720g1be.entity.Post;
 import c0720g1be.service.ICreatePostService;
 import c0720g1be.service.IPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +24,17 @@ public class UpdatePostController {
 
     /**
      * Võ Thành Tín: Create New Post
+     * @return
      */
     @RequestMapping(value = "/create-post", method = RequestMethod.POST)
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        if (post == null) {
-            return new ResponseEntity<Post>(HttpStatus.BAD_REQUEST);
-        } else if (iCreatePostService.createPost(post)) {
-            return new ResponseEntity<Post>(HttpStatus.OK);
+    @ResponseBody
+    public boolean createPost(@RequestBody CreatePostDTO postDTO) {
+        if (postDTO != null) {
+            if (iCreatePostService.createPost(postDTO.getContentPost(), postDTO.getIdAccount(), postDTO.getIdPolicy(), postDTO.getImagePost())) {
+                return true;
+            }
         }
-        return new ResponseEntity<Post>(HttpStatus.BAD_REQUEST);
+        return false;
     }
 
 
@@ -49,5 +50,6 @@ public class UpdatePostController {
             return new ResponseEntity<List<IPolicyDTO>>(listPolicy,HttpStatus.OK);
         }
     }
+
 }
 

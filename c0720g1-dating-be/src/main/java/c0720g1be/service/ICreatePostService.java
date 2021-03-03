@@ -6,6 +6,6 @@ public interface ICreatePostService {
     /**
      * Võ Thành Tín: Create New Post
      */
-    Boolean createPost(Post post);
+    Boolean createPost(String content, Integer accountId, Integer policyId, String image);
 }
 
