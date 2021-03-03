@@ -3,6 +3,7 @@ package c0720g1be.controller;
 import c0720g1be.entity.Account;
 import c0720g1be.service.impl.FriendListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,6 @@ public class FriendListController {
         if (accounts == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<>(accounts,HttpStatus.OK);
     }
 
@@ -64,13 +64,14 @@ public class FriendListController {
      */
 
     @GetMapping("/accept-friend-request")
-    public ResponseEntity<?> acceptNewFriend(@RequestParam Integer idAccount,
-                                          @RequestParam Integer idFriend) {
+    public ResponseEntity<?> acceptNewFriend(@RequestParam Integer idFriend,
+                                             @RequestParam Integer idAccount) {
         Account accounts = friendListService.getFriendById(idAccount);
         if (accounts == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         this.friendListService.acceptNewFriend(idAccount, idFriend);
+        this.friendListService.acceptNewFriend2(idAccount, idFriend);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -86,7 +87,53 @@ public class FriendListController {
         if (accounts == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        this.friendListService.delNewFriend(idAccount, idFriend);
+        this.friendListService.delNewFriend(idFriend,idAccount);
+        this.friendListService.delNewFriend2(idFriend,idAccount);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * search list friend by name
+     * create by LongBP
+     */
+    @GetMapping(value = "/profile/{id}/friend-list/search")
+    public ResponseEntity<List<Account>> searchFriends(@PathVariable Integer id,
+                                                       @RequestParam String name){
+        List<Account> accounts;
+        if (name.equals("")) {
+            accounts = friendListService.getAllMadeFriends(id);
+        }
+        else {
+            accounts = friendListService.searchFriends(id, "%" + name + "%");
+        }
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
+
+    /**
+     * search add friend by name
+     * create by LongBP
+     */
+    @GetMapping(value = "/profile/{id}/search")
+    public ResponseEntity<List<Account>> searchAddFriends(@PathVariable Integer id,
+                                                          @RequestParam String nameFriends){
+        List<Account> accounts = friendListService.searchAddFriends(id,"%" + nameFriends + "%");
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
+
+    /**
+     * add friends
+     * create by LongBP
+     */
+
+    @GetMapping("/add-friend")
+    public ResponseEntity<?> addNewFriend(@RequestParam Integer idAccount,
+                                          @RequestParam Integer idFriend) {
+        Account accounts = friendListService.getFriendById(idAccount);
+        if (accounts == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        this.friendListService.addNewFriend(idAccount, idFriend);
+        this.friendListService.addNewFriend2(idAccount, idFriend);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
