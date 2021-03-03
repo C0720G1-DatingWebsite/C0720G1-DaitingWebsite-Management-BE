@@ -38,7 +38,7 @@ public class PostController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/increaseLike/{idAccount}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/increaseLike/{idAccount}", method = RequestMethod.GET)
     public ResponseEntity<?> increaseLike(@PathVariable int idAccount){
         postService.increaseLike(idAccount);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -50,10 +50,9 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/editPost/{idPost}",method = RequestMethod.PUT)
-    public ResponseEntity<?> editPost(@Valid @RequestBody Post post, @PathVariable Integer idPost){
-        Post postEdit = postService.findById(idPost);
-        postEdit.setId(idPost);
+    @RequestMapping(value = "/editPost",method = RequestMethod.PUT)
+    public ResponseEntity<?> editPost(@Valid @RequestBody Post post){
+        Post postEdit = postService.findById(post.getId());
         postEdit.setContent(post.getContent());
         postEdit.setPolicy(post.getPolicy());
         postService.editPost(postEdit);
