@@ -1,6 +1,7 @@
 package c0720g1be.service;
 
 import c0720g1be.dto.AccountDTO;
+import c0720g1be.dto.AccountDTO2;
 import c0720g1be.entity.Account;
 
 import javax.mail.MessagingException;
@@ -15,7 +16,9 @@ public interface AccountService {
 
     Account findAccountByUserName(String userName);
 
-    Integer findIdUserByUserName(String userName);
+    AccountDTO2 findIdUserByUserName(String userName);
+
+    Account updateInformation(Account id);
 
     String existByUserName(String userName);
 

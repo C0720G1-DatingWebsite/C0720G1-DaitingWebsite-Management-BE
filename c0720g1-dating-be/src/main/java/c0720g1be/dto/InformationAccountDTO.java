@@ -4,7 +4,7 @@ import c0720g1be.entity.City;
 import c0720g1be.entity.Country;
 import c0720g1be.entity.Job;
 
-public class informationAccountDTO {
+public class InformationAccountDTO {
 
     String fullName;
     String address;
@@ -15,7 +15,7 @@ public class informationAccountDTO {
     String accountDescribe;
     String avatar;
 
-    public informationAccountDTO(String fullName, String address, Country country, City city, Job job, Boolean audience, String accountDescribe, String avatar) {
+    public InformationAccountDTO(String fullName, String address, Country country, City city, Job job, Boolean audience, String accountDescribe, String avatar) {
         this.fullName = fullName;
         this.address = address;
         this.country = country;

@@ -1,6 +1,7 @@
 package c0720g1be.service.impl;
 
 import c0720g1be.dto.AccountDTO;
+import c0720g1be.dto.AccountDTO2;
 import c0720g1be.entity.Account;
 import c0720g1be.repository.AccountRepository;
 import c0720g1be.service.AccountService;
@@ -33,9 +34,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Integer findIdUserByUserName(String userName) {
+    public AccountDTO2 findIdUserByUserName(String userName) {
         return accountRepository.findIdUserByUserName(userName);
     }
+
+    @Override
+    public Account updateInformation(Account account) {
+        this.accountRepository.updateInformation(account.getFullName(), account.getAddress(), account.getCountry(), account.getCity(), account.getJob(), account.getAccountDescribe(), account.getAvatar(), account.getId());
+        return account;
+    }
+
 
     @Override
     public String existByUserName(String userName) {
