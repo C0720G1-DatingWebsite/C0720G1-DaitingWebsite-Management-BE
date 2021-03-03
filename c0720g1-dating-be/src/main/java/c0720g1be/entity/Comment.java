@@ -1,5 +1,7 @@
 package c0720g1be.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,25 +15,28 @@ public class Comment {
     String dateComment;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "post_id")
     Post post;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn (name = "account_id")
     Account account;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn (name = "comment_id")
     Comment comment;
 
     public Comment() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

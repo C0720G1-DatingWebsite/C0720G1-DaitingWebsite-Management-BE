@@ -10,16 +10,18 @@ public class JwtResponse {
     private Integer id;
     private String username;
     private String avatar;
+    private Boolean enable;
     private Map<Integer, String> roleList;
 
     public JwtResponse() {
     }
 
-    public JwtResponse(String jwtToken, Integer id, String username, String avatar, Map<Integer, String> roleList) {
+    public JwtResponse(String jwtToken, Integer id, String username, String avatar, Boolean enable, Map<Integer, String> roleList) {
         this.jwtToken = jwtToken;
         this.id = id;
         this.username = username;
         this.avatar = avatar;
+        this.enable = enable;
         this.roleList = roleList;
     }
 
@@ -53,6 +55,14 @@ public class JwtResponse {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
     }
 
     public Map<Integer, String> getRoleList() {

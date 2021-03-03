@@ -14,8 +14,8 @@ import java.util.List;
 @Transactional
 public interface MessageRepository extends JpaRepository<Chat,Integer> {
 
-    @Query(value = "SELECT * FROM dating_application.chat where box_id =?1", nativeQuery = true)
-    List<Chat> listMessage(Integer box_id);
+    @Query(value = "SELECT * FROM chat  where box_id =?1 ORDER BY id  DESC LIMIT ?2", nativeQuery = true)
+    List<Chat> listMessage(Integer box_id,Integer limit);
 
 
     @Modifying

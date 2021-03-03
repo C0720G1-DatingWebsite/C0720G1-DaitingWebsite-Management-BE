@@ -22,18 +22,15 @@ public class Chat {
     public Chat() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 
     public void setId(Integer id) {
         this.id = id;
     }
+
+
 
     public String getContent() {
         return content;
