@@ -1,13 +1,17 @@
 package c0720g1be.service.impl;
 
+import c0720g1be.dto.GetFeedbackDTO;
 import c0720g1be.dto.MemberDTO;
 import c0720g1be.dto.ReportMemberInterfaceDTO;
 import c0720g1be.entity.Account;
+import c0720g1be.entity.Feedback;
 import c0720g1be.entity.ReportContent;
 import c0720g1be.repository.MemberReportManagementRepo;
 import c0720g1be.repository.ReportContentRepo;
 import c0720g1be.service.MemberReportManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,41 +23,29 @@ public class MemberReportManagementServiceImpl implements MemberReportManagement
     @Autowired
     private ReportContentRepo reportContentRepo;
     @Override
-    public List<MemberDTO> findAllMember() {
-        return memberReportManagementRepo.findAllMember();
+    public List<MemberDTO> findAllMember(Integer size) {
+        return memberReportManagementRepo.findAllMember(size);
     }
-
     @Override
     public Account findMemberById(Integer accountId) {
         return memberReportManagementRepo.findMemberById(accountId);
     }
 
     @Override
+    public List<MemberDTO> findAccountByUserNameAndDateOfBirthAndDateOfBirth(String userNameSearch, String dateOfBirthSearch,
+                                                                              String dateRegisterSearch) {
+        return memberReportManagementRepo.findAccountByUserNameAndDateOfBirthAndDateOfBirth(userNameSearch, dateOfBirthSearch, dateRegisterSearch);
+    }
+
+    @Override
     public List<ReportMemberInterfaceDTO> reportMemberList(Integer accountId) {
         return memberReportManagementRepo.reportMemberList(accountId);
     }
-//
-//    @Override
-//    public Report sendReportFeedbackAccount(Report report, Integer accountId) {
-//        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-//        Date date = new Date(System.currentTimeMillis());
-//        System.out.println(formatter.format(date));
-//        return memberReportManagementRepo.sendFeedbackReport(date.toString(), report.getAccountTarget(), report.getAccountVictim(), report.getReportContent());
-//    }
-
 
     @Override
     public void warningMember(String dateReport, Integer accountTarget, Integer accountVictim, Integer reportContent) {
-//        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-//        Date date = new Date(System.currentTimeMillis());
-//        System.out.println(formatter.format(date));
         memberReportManagementRepo.sendFeedbackReport(dateReport, accountTarget, accountVictim, reportContent);
     }
-
-//    @Override
-//    public List<Feedback> findAllFeedback() {
-//        return null;
-//    }
 
     @Override
     public void lockAccountOneWeek(Integer accountId) {
@@ -78,4 +70,10 @@ public class MemberReportManagementServiceImpl implements MemberReportManagement
     public List<ReportContent> findAllByReportContent() {
         return reportContentRepo.findAllReportContent();
     }
+
+    @Override
+    public List<GetFeedbackDTO> findAllFeedback() {
+        return memberReportManagementRepo.findAllGetFeedback();
+    }
+
 }
