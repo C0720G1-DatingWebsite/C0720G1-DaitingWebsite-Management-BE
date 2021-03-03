@@ -1,5 +1,7 @@
 package c0720g1be.entity;
 
+import c0720g1be.dto.ChatDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,12 +9,16 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String name;
+    private MessageType type;
+    String content;
+    String sender;
+    String timeStamp;
+    Integer boxId;
+    String imgUrl;
 
-    @ManyToOne
-            @JoinColumn(name = "chat_type_id")
-    ChatType chatType;
-
+    public enum MessageType {
+        CHAT, JOIN, LEAVE
+    }
     public Chat() {
     }
 
@@ -24,19 +30,48 @@ public class Chat {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getContent() {
+        return content;
     }
 
-    public ChatType getChatType() {
-        return chatType;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public void setChatType(ChatType chatType) {
-        this.chatType = chatType;
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public Integer getBoxId() {
+        return boxId;
+    }
+
+    public void setBoxId(Integer boxId) {
+        this.boxId = boxId;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }
