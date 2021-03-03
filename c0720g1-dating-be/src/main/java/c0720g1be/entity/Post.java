@@ -27,7 +27,7 @@ public class Post {
 
     public Post() {
     }
-    
+
 
     public String getImagePost() {
         return imagePost;
