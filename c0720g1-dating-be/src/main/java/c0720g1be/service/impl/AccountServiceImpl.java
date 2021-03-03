@@ -27,4 +27,9 @@ public class AccountServiceImpl implements AccountService {
     public Account registerAccount(Account accountTemp) {
         return accountRepository.save(accountTemp);
     }
+
+    @Override
+    public Account findById(Integer id) {
+        return accountRepository.findByIdAccount(id);
+    }
 }

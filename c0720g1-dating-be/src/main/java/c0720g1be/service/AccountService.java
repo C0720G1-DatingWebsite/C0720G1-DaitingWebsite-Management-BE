@@ -13,4 +13,6 @@ public interface AccountService {
      * PhuocTC
      **/
     Account registerAccount(Account accountTemp);
+
+    Account findById(Integer id);
 }
