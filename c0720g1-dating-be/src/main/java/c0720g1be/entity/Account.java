@@ -30,6 +30,7 @@ public class Account {
     String backgroundImage;
     @Column
     String vetifyCode;
+    String verificationCode;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
@@ -220,5 +221,13 @@ public class Account {
 
     public void setMaritalStatus(MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }

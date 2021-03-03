@@ -58,4 +58,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
+
+    //
+    
+//@Configuration
+//public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+//    /**
+//     * Nguyen Bao Phuc
+//     * mã hoá mật khẩu
+//     * @return
+//     */
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder(){
+//        return  new BCryptPasswordEncoder(12);
+//    }
+//}
 }
