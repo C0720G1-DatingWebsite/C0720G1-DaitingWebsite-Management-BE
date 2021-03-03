@@ -20,7 +20,12 @@ private MessageRepository messageRepository;
     }
 
     @Override
-    public List<Chat> listMessage(Integer boxId) {
-        return messageRepository.listMessage(boxId);
+    public List<Chat> listMessage(Integer boxId, Integer limit) {
+        return messageRepository.listMessage(boxId,limit);
+    }
+
+    @Override
+    public void deleteMessage(int boxId) {
+
     }
 }

@@ -18,9 +18,9 @@ public class WebSocketController {
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/1234")
     public ChatDTO sendMessage(@Payload ChatDTO chat) {
-//        if(chat.getContent()!=null) {
-//            messageService.addMessage(chat.getSender(), chat.getContent(), chat.getTimeStamp(), chat.getBoxId(),chat.getImgUrl());
-//        }
+        if(chat.getContent()!=null) {
+            messageService.addMessage(chat.getSender(), chat.getContent(), chat.getTimeStamp(), chat.getBoxId(),chat.getImgUrl());
+        }
         return chat;
     }
 

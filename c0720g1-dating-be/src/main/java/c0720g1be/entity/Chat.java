@@ -31,9 +31,6 @@ public class Chat {
     }
 
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getContent() {
         return content;
