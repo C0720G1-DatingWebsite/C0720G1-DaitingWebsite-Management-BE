@@ -28,7 +28,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "list-group", method = RequestMethod.GET)
-    public ResponseEntity<?> listGroup(@PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<?> listGroup(@PageableDefault(size = 6) Pageable pageable) {
         return new ResponseEntity<>(this.userGroupService.findAll(pageable), HttpStatus.OK);
     }
 
@@ -39,7 +39,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "search-name-group/{name}", method = RequestMethod.GET)
-    public ResponseEntity<?> searchGroupByName(@PageableDefault(size = 5) Pageable pageable,
+    public ResponseEntity<?> searchGroupByName(@PageableDefault(size = 6) Pageable pageable,
                                                @PathVariable("name") String name) {
         return new ResponseEntity<>(this.userGroupService.findByNameContaining(name, pageable), HttpStatus.OK);
     }
@@ -65,8 +65,33 @@ public class GroupController {
     }
 
     @RequestMapping(value = "list-member-group/{groupId}", method = RequestMethod.GET)
-    public ResponseEntity<?> listMember(@PageableDefault(size = 5) Pageable pageable,
+    public ResponseEntity<?> listMember(@PageableDefault(size = 6) Pageable pageable,
                                         @PathVariable int groupId) {
         return new ResponseEntity<>(this.userGroupService.getListMember(groupId,pageable), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "find-name-group/{nameGroup}", method = RequestMethod.GET)
+    public ResponseEntity<?> findByNameGroup(@PageableDefault(size = 6) Pageable pageable,
+                                             @PathVariable(name = "nameGroup") String nameGroup) {
+        return new ResponseEntity<>(this.userGroupService.findByNameContaining(nameGroup,pageable), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "find-member-group/{nameGroup}", method = RequestMethod.GET)
+    public ResponseEntity<?> findByMemberGroup(@PageableDefault(size = 6) Pageable pageable,
+                                             @PathVariable(name = "nameGroup") String nameGroup) {
+        return new ResponseEntity<>(this.userGroupService.findByNameContaining(nameGroup,pageable), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "account-joined-group/{accountId}", method = RequestMethod.GET)
+    public ResponseEntity<?> accountJoinedGroup(@PathVariable(name = "accountId") int accountId) {
+        return new ResponseEntity<>(this.userGroupService.accountJoinedGroup(accountId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "search-member-group/{groupId}/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> searchMemberGroup(@PageableDefault(size = 6) Pageable pageable,
+                                               @PathVariable(name = "groupId") int groupId,
+                                               @PathVariable(name = "name") String name) {
+        return new ResponseEntity<>(this.userGroupService.searchMember(groupId,name,pageable), HttpStatus.OK);
+    }
+
 }

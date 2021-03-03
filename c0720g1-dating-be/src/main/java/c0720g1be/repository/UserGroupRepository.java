@@ -36,10 +36,22 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Integer> {
     Integer postGroupQuantity(int groupId);
 
     @Transactional
-    @Query(value = "select a.id , a.avatar , a.background_image " +
+    @Query(value = "select a.id , a.avatar , a.background_image as backgroundImage, a.full_name as fullName, abc.group_role_id as groupRoleId " +
             "from `account` a " +
             "right join account_group abc on abc.account_id = a.id "+
             "where abc.group_id = ?1", nativeQuery = true)
     Page<IMemberInfDTO> getListMember(Integer groupId, Pageable pageable);
 
+    @Transactional
+    @Query(value = "select account_group.group_id\n" +
+            "from account_group\n" +
+            "where account_id = ?1 ", nativeQuery = true)
+    List<Integer> accountJoinedGroup(int accountId);
+
+    @Transactional
+    @Query(value ="select a.id , a.avatar , a.background_image as backgroundImage, a.full_name as fullName, abc.group_role_id as groupRoleId " +
+            "from `account` a " +
+            "right join account_group abc on abc.account_id = a.id " +
+            "where abc.group_id = ?1 and (a.full_name like %?2%) ",nativeQuery = true)
+    Page<IMemberInfDTO> searchMember(Integer groupId, String nameSearch, Pageable pageable);
 }
