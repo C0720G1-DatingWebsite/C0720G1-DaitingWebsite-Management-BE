@@ -6,13 +6,10 @@ import c0720g1be.dto.InformationAccountDTO;
 import c0720g1be.entity.Account;
 import c0720g1be.payload.reponse.MessageResponse;
 import c0720g1be.payload.request.VerifyRequest;
-import c0720g1be.service.AccountMainService;
-import c0720g1be.service.RoleMainService;
+import c0720g1be.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,19 +17,19 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class AccountMainController {
 
-    @Autowired
-     private AccountMainService accountMainService;
-
 //    @Autowired
 //    private PasswordEncoder encoder;
 
     @Autowired
-    private RoleMainService roleMainService;
+    private AccountService accountService;
 
 
     /**
@@ -46,15 +43,15 @@ public class AccountMainController {
      */
     @PostMapping(value = "/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody AccountMainDTO accountMainDTO)throws MessagingException, UnsupportedEncodingException{
-        if (accountMainService.existByUserName(accountMainDTO.getUserName()) != null){
+        if (accountService.existByUserName(accountMainDTO.getUserName()) != null){
             return ResponseEntity.badRequest().body(new MessageResponse("Tên email(tài khoản) đã được sử dụng!"));
         }
         //Create new user account
-        accountMainService.addNew(accountMainDTO);
+        accountService.addNew(accountMainDTO);
 
-        AccountMainDTO2 idAccountAfterCreated = accountMainService.findIdUserByUserName(accountMainDTO.getUserName());
+        AccountMainDTO2 idAccountAfterCreated = accountService.findIdUserByUserName(accountMainDTO.getUserName());
 
-            roleMainService.setDefaultRole(idAccountAfterCreated.getId(), 1);
+            accountService.setDefaultRole(idAccountAfterCreated.getId(), 1);
 
         return ResponseEntity.ok(new MessageResponse("Đăng ký tài khoản thành công!"));
 
@@ -68,7 +65,7 @@ public class AccountMainController {
      */
     @PostMapping( value = "/verify")
     public ResponseEntity<?> VerifyEmail(@RequestBody VerifyRequest code){
-        Boolean isVerified = accountMainService.findAccountByVerificationCode(code.getCode());
+        Boolean isVerified = accountService.findAccountByVerificationCode(code.getCode());
         if (isVerified){
             return ResponseEntity.ok(new MessageResponse("activated"));
         }else {
@@ -78,7 +75,7 @@ public class AccountMainController {
 
     @PostMapping(value = "/update/{id}")
     public ResponseEntity<?> updateInformation(@RequestBody InformationAccountDTO informationAccountDTO, BindingResult bindingResult, @PathVariable Account id){
-        Account account1 = accountMainService.updateInformation(id);
+        Account account1 = accountService.updateInformation(id);
 
         if (bindingResult.hasErrors()){
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.OK);
@@ -94,7 +91,7 @@ public class AccountMainController {
             account1.setAudience(informationAccountDTO.getAudience());
             account1.setAccountDescribe(informationAccountDTO.getAccountDescribe());
             account1.setAvatar(informationAccountDTO.getAvatar());
-            accountMainService.updateInformation(account1);
+            accountService.updateInformation(account1);
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
