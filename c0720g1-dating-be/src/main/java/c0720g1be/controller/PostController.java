@@ -85,7 +85,7 @@ public class PostController {
     @RequestMapping(value = "/editPost",method = RequestMethod.PUT)
     public ResponseEntity<?> editPost(@Valid @RequestBody Post post){
         Post postEdit = postService.findById(post.getId());
-        postEdit.setImg(post.getImg());
+        postEdit.setImage(post.getImage());
         postEdit.setContent(post.getContent());
         postEdit.setPolicy(post.getPolicy());
         postService.editPost(postEdit);

@@ -47,6 +47,7 @@ public class AccountMainController {
             return ResponseEntity.badRequest().body(new MessageResponse("Tên email(tài khoản) đã được sử dụng!"));
         }
         //Create new user account
+
         accountService.addNew(accountMainDTO);
 
         AccountMainDTO2 idAccountAfterCreated = accountService.findIdUserByUserName(accountMainDTO.getUserName());
