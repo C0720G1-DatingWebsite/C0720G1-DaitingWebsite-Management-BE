@@ -4,7 +4,7 @@ public class CreatePostDTO {
     Integer idAccount;
     Integer idPolicy;
     String contentPost;
-    String imagePost;
+    String image;
 
     public CreatePostDTO() {
     }
@@ -34,10 +34,10 @@ public class CreatePostDTO {
     }
 
     public String getImagePost() {
-        return imagePost;
+        return image;
     }
 
     public void setImagePost(String imagePost) {
-        this.imagePost = imagePost;
+        this.image = imagePost;
     }
 }

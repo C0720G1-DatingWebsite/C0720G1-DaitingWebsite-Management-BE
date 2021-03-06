@@ -11,17 +11,19 @@ public class JwtResponse {
     private String username;
     private String avatar;
     private Boolean enable;
+    private String fullName;
     private Map<Integer, String> roleList;
 
     public JwtResponse() {
     }
 
-    public JwtResponse(String jwtToken, Integer id, String username, String avatar, Boolean enable, Map<Integer, String> roleList) {
+    public JwtResponse(String jwtToken, Integer id, String username, String avatar, Boolean enable, String fullName, Map<Integer, String> roleList) {
         this.jwtToken = jwtToken;
         this.id = id;
         this.username = username;
         this.avatar = avatar;
         this.enable = enable;
+        this.fullName = fullName;
         this.roleList = roleList;
     }
 
@@ -63,6 +65,14 @@ public class JwtResponse {
 
     public void setEnable(Boolean enable) {
         this.enable = enable;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Map<Integer, String> getRoleList() {

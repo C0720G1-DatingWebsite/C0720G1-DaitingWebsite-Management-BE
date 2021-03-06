@@ -82,6 +82,7 @@ public class LoginController {
                         account.getUserName(),
                         account.getAvatar(),
                         account.getEnable(),
+                        account.getFullName(),
                         roleList),
                 HttpStatus.OK);
     }
@@ -136,6 +137,7 @@ public class LoginController {
                         account.getUserName(),
                         account.getAvatar(),
                         account.getEnable(),
+                        account.getFullName(),
                         roleList),
                 HttpStatus.OK);
     }
