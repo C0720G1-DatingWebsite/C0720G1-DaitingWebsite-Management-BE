@@ -1,9 +1,9 @@
 package c0720g1be.controller;
 
+import c0720g1be.dto.FriendDTO;
 import c0720g1be.entity.Account;
 import c0720g1be.service.impl.FriendListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +22,8 @@ public class FriendListController {
      * create by LongBP
      */
     @GetMapping("/profile/{id}")
-    public ResponseEntity<Account> getFriendById(@PathVariable Integer id){
-        Account account = this.friendListService.getFriendById(id);
+    public ResponseEntity<FriendDTO> getFriendById(@PathVariable Integer id){
+        FriendDTO account = this.friendListService.getFriendById(id);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -36,8 +36,8 @@ public class FriendListController {
      * create by LongBP
      */
     @GetMapping("/profile/{id}/friend-list")
-    public ResponseEntity<List<Account>> getAllFriendList(@PathVariable Integer id){
-        List<Account> account = this.friendListService.getAllMadeFriends(id);
+    public ResponseEntity<List<FriendDTO>> getAllFriendList(@PathVariable Integer id){
+        List<FriendDTO> account = this.friendListService.getAllMadeFriends(id);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -50,8 +50,8 @@ public class FriendListController {
      * create by LongBP
      */
     @GetMapping("/profile/{id}/friend-request")
-    public ResponseEntity<List<Account>> getAllFriendRequest(@PathVariable Integer id){
-        List<Account> accounts = this.friendListService.getAllFriendRequest(id);
+    public ResponseEntity<List<FriendDTO>> getAllFriendRequest(@PathVariable Integer id){
+        List<FriendDTO> accounts = this.friendListService.getAllFriendRequest(id);
         if (accounts == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -64,14 +64,14 @@ public class FriendListController {
      */
 
     @GetMapping("/accept-friend-request")
-    public ResponseEntity<?> acceptNewFriend(@RequestParam Integer idFriend,
-                                             @RequestParam Integer idAccount) {
-        Account accounts = friendListService.getFriendById(idAccount);
+    public ResponseEntity<FriendDTO> acceptNewFriend(@RequestParam Integer accountID,
+                                             @RequestParam Integer friendID) {
+        FriendDTO accounts = friendListService.getFriendById(accountID);
         if (accounts == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        this.friendListService.acceptNewFriend(idAccount, idFriend);
-        this.friendListService.acceptNewFriend2(idAccount, idFriend);
+        this.friendListService.acceptNewFriend(accountID, friendID);
+        this.friendListService.acceptNewFriend2(accountID, friendID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -81,9 +81,9 @@ public class FriendListController {
      */
 
     @GetMapping("/del-friend-request")
-    public ResponseEntity<?> delNewFriend(@RequestParam Integer idAccount,
+    public ResponseEntity<FriendDTO> delNewFriend(@RequestParam Integer idAccount,
                                           @RequestParam Integer idFriend) {
-        Account accounts = friendListService.getFriendById(idAccount);
+        FriendDTO accounts = friendListService.getFriendById(idAccount);
         if (accounts == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -97,9 +97,9 @@ public class FriendListController {
      * create by LongBP
      */
     @GetMapping(value = "/profile/{id}/friend-list/search")
-    public ResponseEntity<List<Account>> searchFriends(@PathVariable Integer id,
+    public ResponseEntity<List<FriendDTO>> searchFriends(@PathVariable Integer id,
                                                        @RequestParam String name){
-        List<Account> accounts;
+        List<FriendDTO> accounts;
         if (name.equals("")) {
             accounts = friendListService.getAllMadeFriends(id);
         }
@@ -114,9 +114,9 @@ public class FriendListController {
      * create by LongBP
      */
     @GetMapping(value = "/profile/{id}/search")
-    public ResponseEntity<List<Account>> searchAddFriends(@PathVariable Integer id,
+    public ResponseEntity<List<FriendDTO>> searchAddFriends(@PathVariable Integer id,
                                                           @RequestParam String nameFriends){
-        List<Account> accounts = friendListService.searchAddFriends(id,"%" + nameFriends + "%");
+        List<FriendDTO> accounts = friendListService.searchAddFriends(id,"%" + nameFriends + "%");
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
@@ -128,7 +128,7 @@ public class FriendListController {
     @GetMapping("/add-friend")
     public ResponseEntity<?> addNewFriend(@RequestParam Integer idAccount,
                                           @RequestParam Integer idFriend) {
-        Account accounts = friendListService.getFriendById(idAccount);
+        FriendDTO accounts = friendListService.getFriendById(idAccount);
         if (accounts == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

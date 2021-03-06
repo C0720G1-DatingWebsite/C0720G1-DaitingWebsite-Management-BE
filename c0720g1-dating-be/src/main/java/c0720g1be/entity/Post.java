@@ -14,8 +14,6 @@ public class Post {
     int likeCount;
     String image;
 
-
-
     @ManyToOne
     @JoinColumn(name = "account_id")
     Account account;

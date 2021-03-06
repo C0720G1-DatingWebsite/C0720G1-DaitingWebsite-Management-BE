@@ -1,5 +1,6 @@
 package c0720g1be.service.impl;
 
+import c0720g1be.dto.FriendDTO;
 import c0720g1be.entity.Account;
 import c0720g1be.repository.FriendListRepository;
 import c0720g1be.service.IFriendListService;
@@ -19,7 +20,7 @@ public class FriendListService implements IFriendListService {
      * create by LongBP
      */
     @Override
-    public List<Account> getAllMadeFriends(Integer id) {
+    public List<FriendDTO> getAllMadeFriends(Integer id) {
         return this.friendListRepository.getAllMadeFriends(id);
     }
 
@@ -28,7 +29,7 @@ public class FriendListService implements IFriendListService {
      * create by LongBP
      */
     @Override
-    public List<Account> getAllFriendRequest(Integer id) {
+    public List<FriendDTO> getAllFriendRequest(Integer id) {
         return this.friendListRepository.getALlFriendRequest(id);
     }
 
@@ -37,13 +38,13 @@ public class FriendListService implements IFriendListService {
      * create by LongBP
      */
     @Override
-    public void acceptNewFriend(Integer friendId, Integer accountId) {
-        this.friendListRepository.acceptNewFriend(friendId, accountId);
+    public void acceptNewFriend(Integer friendID, Integer accountID) {
+        this.friendListRepository.acceptNewFriend(friendID, accountID);
     }
 
     @Override
-    public void acceptNewFriend2(Integer friendId, Integer accountId) {
-        this.friendListRepository.acceptNewFriend2(friendId, accountId);
+    public void acceptNewFriend2(Integer friendID, Integer accountID) {
+        this.friendListRepository.acceptNewFriend2(friendID, accountID);
     }
 
     /**
@@ -65,7 +66,7 @@ public class FriendListService implements IFriendListService {
      * create by LongBP
      */
     @Override
-    public Account getFriendById(Integer id) {
+    public FriendDTO getFriendById(Integer id) {
         return this.friendListRepository.getFriendById(id);
     }
 
@@ -74,7 +75,7 @@ public class FriendListService implements IFriendListService {
      * create by LongBP
      */
     @Override
-    public List<Account> searchFriends(Integer id, String name) {
+    public List<FriendDTO> searchFriends(Integer id, String name) {
         return this.friendListRepository.searchFriends(id, name);
     }
 
@@ -83,7 +84,7 @@ public class FriendListService implements IFriendListService {
      * create by LongBP
      */
     @Override
-    public List<Account> searchAddFriends(Integer id, String nameFriends) {
+    public List<FriendDTO> searchAddFriends(Integer id, String nameFriends) {
         return this.friendListRepository.searchAddFriends(id,nameFriends);
     }
 
