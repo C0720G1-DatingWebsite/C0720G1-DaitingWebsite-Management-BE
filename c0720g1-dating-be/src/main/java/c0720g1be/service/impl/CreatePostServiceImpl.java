@@ -1,5 +1,6 @@
 package c0720g1be.service.impl;
 
+import c0720g1be.dto.CreatePostDTO;
 import c0720g1be.entity.Post;
 import c0720g1be.repository.CreatePostRepository;
 import c0720g1be.service.ICreatePostService;
@@ -26,5 +27,17 @@ public class CreatePostServiceImpl implements ICreatePostService {
         }
         return true;
     }
+
+    @Override
+    public Boolean createPostGroup(CreatePostDTO createPostDTO) {
+        try{
+            createPostRepository.createPostGroup(createPostDTO.getContentPost(), LocalDateTime.now().toString(), createPostDTO.getIdAccount(), createPostDTO.getIdPolicy(), createPostDTO.getImagePost(), createPostDTO.getIdGroup());
+        } catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+
 }
 

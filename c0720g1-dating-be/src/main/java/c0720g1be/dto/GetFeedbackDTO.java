@@ -4,5 +4,6 @@ public interface GetFeedbackDTO {
     String getSender();
     String getContent();
     String getSentDate();
+    String getAccountTarget();
     boolean getStatus();
 }

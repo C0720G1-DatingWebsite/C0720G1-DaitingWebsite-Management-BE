@@ -1,9 +1,6 @@
 package c0720g1be.controller;
 
-import c0720g1be.dto.GetFeedbackDTO;
-import c0720g1be.dto.MemberDTO;
-import c0720g1be.dto.ReportMemberDTO;
-import c0720g1be.dto.ReportMemberInterfaceDTO;
+import c0720g1be.dto.*;
 import c0720g1be.entity.Account;
 import c0720g1be.entity.Feedback;
 import c0720g1be.entity.ReportContent;
@@ -44,15 +41,14 @@ public class MemberReportManagementController {
     public ResponseEntity<List<MemberDTO>> getAllMember(
             @RequestParam(defaultValue = "") String userNameSearch,
             @RequestParam(defaultValue = "") String dateOfBirthSearch,
-            @RequestParam(defaultValue = "") String dateRegisterSearch,
-            @RequestParam Integer size
+            @RequestParam(defaultValue = "") String dateRegisterSearch
     ) {
         List<MemberDTO> memberDTOList;
         if (!userNameSearch.equals("") || !dateOfBirthSearch.equals("") || !dateRegisterSearch.equals("")) {
             return new ResponseEntity<>(memberReportManagementService.findAccountByUserNameAndDateOfBirthAndDateOfBirth
                     ("%" + userNameSearch + "%", "%" + dateOfBirthSearch + "%", "%" + dateRegisterSearch + "%"), (HttpStatus.OK));
         } else {
-            memberDTOList = memberReportManagementService.findAllMember(size);
+            memberDTOList = memberReportManagementService.findAllMember();
         }
         if (memberDTOList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -93,7 +89,7 @@ public class MemberReportManagementController {
     * HungDH
      */
     @GetMapping("/send-warning-message/{id}")
-    public ResponseEntity<?> sendEmail(@PathVariable Integer id) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<?> sendEmail(@PathVariable Integer id, @RequestParam String reportContentName) throws MessagingException, UnsupportedEncodingException {
         Account account = memberReportManagementService.findMemberById(id);
         if (!account.getEnable()){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -105,13 +101,14 @@ public class MemberReportManagementController {
         helper.setTo(account.getEmail());
         helper.setFrom("hungdhpd01429@gmail.com","DATING WEBSITE - Website hẹn hò lớn nhất thế giới!");
         helper.setSubject(subject);
-        mailContent = "<p sytle='color:red;'>Xin chào " + account.getUserName() + " ,<p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>";
+        mailContent = "<p sytle='color:red;'>Xin chào <b>" + account.getUserName() + "</b><p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>" +
+                "<p>Lý do vi phạm: <b>" + reportContentName + "</b>. Mong bạn rút kinh nghiệm để mọi người có một sân chơi lành mạnh. <br> Chúc một ngày tốt lành!";
         helper.setText(mailContent, true);
         javaMailSender.send(message);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/lock-account-one-week/{accountId}")
-    public ResponseEntity<?> lockAccountOneWeek(@PathVariable Integer accountId) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<?> lockAccountOneWeek(@PathVariable Integer accountId, @RequestParam String reportContentName) throws MessagingException, UnsupportedEncodingException {
         Account account = memberReportManagementService.findMemberById(accountId);
         System.out.println(account.getEnable());
         if (!account.getEnable()){
@@ -124,15 +121,16 @@ public class MemberReportManagementController {
         helper.setTo(account.getEmail());
         helper.setFrom("hungdhpd01429@gmail.com","DATING WEBSITE - Website hẹn hò lớn nhất thế giới!");
         helper.setSubject(subject);
-        mailContent = "<p sytle='color:red;'>Xin chào " + account.getUserName() + " ,<p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>" +
-                "<h3><a href=''>Bạn bị khóa tài khoản 1 tuần</a></h3>";
+        mailContent = "<p sytle='color:red;'>Xin chào <b>" + account.getUserName() + "</b><p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>" +
+                "<h3>Bạn bị khóa tài khoản 1 tuần</h3>" +
+                "<p>Lý do vi phạm: <b>" + reportContentName + "</b>. Mong bạn rút kinh nghiệm để mọi người có một sân chơi lành mạnh. <br> Chúc một ngày tốt lành!";
         helper.setText(mailContent, true);
         javaMailSender.send(message);
         memberReportManagementService.lockAccountOneWeek(accountId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/lock-account-one-month/{accountId}")
-    public ResponseEntity<?> lockAccountOneMonth(@PathVariable Integer accountId) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<?> lockAccountOneMonth(@PathVariable Integer accountId, @RequestParam String reportContentName) throws MessagingException, UnsupportedEncodingException {
         Account account = memberReportManagementService.findMemberById(accountId);
         System.out.println(account.getEnable());
         if (!account.getEnable()){
@@ -145,15 +143,16 @@ public class MemberReportManagementController {
         helper.setTo(account.getEmail());
         helper.setFrom("hungdhpd01429@gmail.com","DATING WEBSITE - Website hẹn hò lớn nhất thế giới!");
         helper.setSubject(subject);
-        mailContent = "<p sytle='color:red;'>Xin chào " + account.getUserName() + " ,<p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>" +
-                "<h3><a href=''>Bạn bị khóa tài khoản 30 ngay</a></h3>";
+        mailContent = "<p sytle='color:red;'>Xin chào <b>" + account.getUserName() + "</b><p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>" +
+                "<h3>Bạn bị khóa tài khoản 30 ngày.</h3>" +
+                "<p>Lý do vi phạm: <b>" + reportContentName + "</b>. Mong bạn rút kinh nghiệm để mọi người có một sân chơi lành mạnh. <br> Chúc một ngày tốt lành!";
         helper.setText(mailContent, true);
         javaMailSender.send(message);
         memberReportManagementService.lockAccountOnemonth(accountId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/lock-account-forever/{accountId}")
-    public ResponseEntity<?> lockAccountForever(@PathVariable Integer accountId) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<?> lockAccountForever(@PathVariable Integer accountId, @RequestParam String reportContentName) throws MessagingException, UnsupportedEncodingException {
         Account account = memberReportManagementService.findMemberById(accountId);
         System.out.println(account.getEnable());
         if (!account.getEnable()){
@@ -166,8 +165,9 @@ public class MemberReportManagementController {
         helper.setTo(account.getEmail());
         helper.setFrom("hungdhpd01429@gmail.com","DATING WEBSITE - Website hẹn hò lớn nhất thế giới!");
         helper.setSubject(subject);
-        mailContent = "<p sytle='color:red;'>Xin chào " + account.getUserName() + " ,<p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>" +
-                "<h3><a href=''>Bạn đã bị khóa tài khoản vĩnh viễn</a></h3>";
+        mailContent = "<p sytle='color:red;'>Xin chào <b>" + account.getUserName() + "</b> <p>" + "<p> Chúng tôi nhận thấy bạn đã vi phạm qui chế của DATING WEBSITE:</p>" +
+                "<h3>Bạn bị khóa tài khoản vĩnh viễn.</h3>" +
+                "<p>Lý do vi phạm: <b>" + reportContentName + "</b>. Mong bạn rút kinh nghiệm để mọi người có một sân chơi lành mạnh. <br> Chúc một ngày tốt lành!";
         helper.setText(mailContent, true);
         javaMailSender.send(message);
         memberReportManagementService.lockAccountForever(accountId);
@@ -180,6 +180,9 @@ public class MemberReportManagementController {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
         System.out.println(formatter.format(date));
+        if(accountTarget.equals(accountVictim)){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         memberReportManagementService.warningMember(report.getDateReport(), accountTarget.getId(),
                 accountVictim.getId(), Integer.parseInt(report.getReportContent()));
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -191,5 +194,12 @@ public class MemberReportManagementController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(getFeedbackDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAccountTarget/{userName}")
+    public ResponseEntity<AccountTarget> getAccountTarget(@PathVariable String userName){
+        AccountTarget accountTarget = memberReportManagementService.getAccountTarget(userName);
+        memberReportManagementService.setFeedBack(accountTarget.getId());
+        return new ResponseEntity<AccountTarget>(accountTarget,HttpStatus.OK);
     }
 }

@@ -8,6 +8,8 @@ import c0720g1be.service.WallAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +78,7 @@ public class WallAccountController {
      * Trung TQ: Lấy danh sách bạn bè theo id tài khoản
      * */
     @RequestMapping(value = "/findById/{id}/list-friend", method = RequestMethod.GET)
-    public ResponseEntity<List<Friend>> listFriend(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<Friend>> listIdAccountFriend(@PathVariable("id") Integer id) {
         List<Friend> friendList = wallAccountService.findAllByIdAccountFriend(id);
         if (friendList.isEmpty()) {
             return new ResponseEntity<List<Friend>>(HttpStatus.NO_CONTENT);
@@ -84,4 +86,12 @@ public class WallAccountController {
         return new ResponseEntity<List<Friend>>(friendList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/list-friend", method = RequestMethod.GET)
+    public ResponseEntity<List<Friend>> listAllVaccination() {
+        List<Friend> friends = wallAccountService.findAllByFriend();
+        if (friends.isEmpty()) {
+            return new ResponseEntity<List<Friend>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Friend>>(friends, HttpStatus.OK);
+    }
 }

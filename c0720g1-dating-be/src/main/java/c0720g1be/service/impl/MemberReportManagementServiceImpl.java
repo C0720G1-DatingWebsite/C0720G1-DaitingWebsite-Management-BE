@@ -1,5 +1,6 @@
 package c0720g1be.service.impl;
 
+import c0720g1be.dto.AccountTarget;
 import c0720g1be.dto.GetFeedbackDTO;
 import c0720g1be.dto.MemberDTO;
 import c0720g1be.dto.ReportMemberInterfaceDTO;
@@ -23,8 +24,8 @@ public class MemberReportManagementServiceImpl implements MemberReportManagement
     @Autowired
     private ReportContentRepo reportContentRepo;
     @Override
-    public List<MemberDTO> findAllMember(Integer size) {
-        return memberReportManagementRepo.findAllMember(size);
+    public List<MemberDTO> findAllMember() {
+        return memberReportManagementRepo.findAllMember();
     }
     @Override
     public Account findMemberById(Integer accountId) {
@@ -74,6 +75,16 @@ public class MemberReportManagementServiceImpl implements MemberReportManagement
     @Override
     public List<GetFeedbackDTO> findAllFeedback() {
         return memberReportManagementRepo.findAllGetFeedback();
+    }
+
+    @Override
+    public AccountTarget getAccountTarget(String userName) {
+        return memberReportManagementRepo.getAccountTarget(userName);
+    }
+
+    @Override
+    public void setFeedBack(int idAccount) {
+        memberReportManagementRepo.setFeedBack(idAccount);
     }
 
 }

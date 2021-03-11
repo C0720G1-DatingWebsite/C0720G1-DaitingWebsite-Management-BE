@@ -56,10 +56,19 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "select * from account where verification_code = ?1", nativeQuery = true)
     Account findAccountByVerificationCode(String verifyCode);
 
+    @Modifying
     @Query(value = "update account as p set p.full_name =?1, p.address =?2, p.country_id = ?3, p.city_id = ?4, p.job_id = ?5, \n" +
             "p.audience =?6, p.account_describe = ?7, p.avatar =?8" +
             " where id =?9", nativeQuery = true)
     void updateInformation(String fullName, String address, Country countryID, City cityId
             , Job jobId, String audience, String avatar, Integer id);
 
+    @Modifying
+    @Query(value = "UPDATE `account` SET " +
+            "`account_describe` = ?1, `address` = ?2, `fullName` = ?3, `date_of_birth` = ?4, " +
+            "`gender` = ?5, `city_id` = ?6, `country_id` = ?7, `job_id` = ?8, " +
+            "`marital_status_id` = ?9, `email` = ?10, 'audience' = ?11 WHERE (`id` = ?12) ", nativeQuery = true)
+    void updateAccount(String accountDescribe, String address, String fullName, String dateOfBirth,
+                       Boolean gender, Integer city, Integer country, Integer job,
+                       Integer maritalStatus, String email, Boolean audience, Integer id);
 }

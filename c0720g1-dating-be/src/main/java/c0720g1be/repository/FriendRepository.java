@@ -12,4 +12,8 @@ public interface FriendRepository extends JpaRepository<Friend, Integer> {
      * */
     @Query(value = "select * from friend where account_id = ?", nativeQuery = true)
     List<Friend> findAllByFriend(Integer id);
+
+    @Query(value = "select * from friend", nativeQuery = true)
+    List<Friend> findAllByFriend();
+
 }

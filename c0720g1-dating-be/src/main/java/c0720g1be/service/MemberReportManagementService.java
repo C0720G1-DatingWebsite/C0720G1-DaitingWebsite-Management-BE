@@ -1,5 +1,6 @@
 package c0720g1be.service;
 
+import c0720g1be.dto.AccountTarget;
 import c0720g1be.dto.GetFeedbackDTO;
 import c0720g1be.dto.MemberDTO;
 import c0720g1be.dto.ReportMemberInterfaceDTO;
@@ -12,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface MemberReportManagementService {
-    List<MemberDTO> findAllMember(Integer size);
+    List<MemberDTO> findAllMember();
     Account findMemberById(Integer accountId);
     List<MemberDTO> findAccountByUserNameAndDateOfBirthAndDateOfBirth(String userNameSearch, String dateOfBirthSearch,
                                                                       String dateRegisterSearch);
@@ -24,4 +25,6 @@ public interface MemberReportManagementService {
     void unlockAccount();
     List<ReportContent> findAllByReportContent();
     List<GetFeedbackDTO> findAllFeedback();
+    AccountTarget getAccountTarget(String userName);
+    void setFeedBack(int idAccount);
 }
