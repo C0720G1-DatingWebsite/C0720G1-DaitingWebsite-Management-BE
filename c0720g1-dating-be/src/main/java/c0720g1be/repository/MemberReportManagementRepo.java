@@ -1,10 +1,12 @@
 package c0720g1be.repository;
 
+import c0720g1be.dto.AccountTarget;
 import c0720g1be.dto.GetFeedbackDTO;
 import c0720g1be.dto.MemberDTO;
 import c0720g1be.dto.ReportMemberInterfaceDTO;
 import c0720g1be.entity.Account;
 import c0720g1be.entity.Feedback;
+import c0720g1be.entity.ReportContent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +15,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.io.StringReader;
 import java.util.List;
 
 @Repository
@@ -25,8 +28,8 @@ public interface MemberReportManagementRepo extends JpaRepository<Account, Integ
             "account.date_of_birth as dateOfBirth, count(report.account_target_id) as numberOfViolations " +
             "from account " +
             "left join report on account.id = report.account_target_id " +
-            "group by account.id limit ?", nativeQuery = true)
-    List<MemberDTO> findAllMember(Integer size);
+            "group by account.id", nativeQuery = true)
+    List<MemberDTO> findAllMember();
 
     /*
     HungDH - tim kiem nhan vien theo username, ngay sinh, ngay tham gia
@@ -110,10 +113,21 @@ public interface MemberReportManagementRepo extends JpaRepository<Account, Integ
             "values(?1, ?2, ?3 ,?4)", nativeQuery = true)
     void sendFeedbackReport(String dateReport, Integer accountTarget, Integer accountVictim, Integer reportContent);
 
-    @Query(nativeQuery = true, value = "select account.user_name as sender, report_content.name as content, report.date_report as sentDate, account.is_enable as status \n" +
+    /*
+    HungDH - lay ra list phan hoi
+     */
+    @Query(nativeQuery = true, value = "select account.user_name as sender, report_content.name as content, report.date_report as sentDate, \n" +
+            "(select user_name from account where id = report.account_target_id) as accountTarget, feedback.status as status\n" +
             "from account \n" +
             "join report on report.account_victim_id = account.id \n" +
-            "join report_content on report_content.id = report.report_content_id")
+            "join report_content on report_content.id = report.report_content_id \n" +
+            "join feedback on account.id = feedback.account_id")
     List<GetFeedbackDTO> findAllGetFeedback();
 
+    @Query(value = "select account.id as id, account.user_name as userName from account where account.user_name = ?1",nativeQuery = true)
+    AccountTarget getAccountTarget(String userName);
+    @Transactional
+    @Modifying
+    @Query(value = "update feedback set feedback.status = true where feedback.account_id = ?1", nativeQuery = true)
+    void setFeedBack(int idAccount);
 }

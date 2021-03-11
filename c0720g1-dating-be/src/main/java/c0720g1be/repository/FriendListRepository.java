@@ -115,13 +115,10 @@ public interface FriendListRepository extends JpaRepository<Account,Integer> {
      * create by LongBP
      */
     @Query(value = "select account.background_image as backgroundImage, account.avatar as avatar, account.user_name as username, \n" +
-            " account.full_name as fullName, account.account_describe as accountDescribe,friend.state_id as stateID ,account.id as accountID, friend.friend_id as friendID, \n" +
-            " (select count(account.id) \n" +
+            " account.full_name as fullName, account.account_describe as accountDescribe, \n" +
+            " account.id as accountID, \n" +
+            " mutual_friend(?1, account.id) as mutualFriends, friend_state (account.id, ?1) as stateID \n" +
             " from account \n" +
-            " where account.id in ( select friend.friend_id from friend where friend.account_id = accountID) \n" +
-            " and account.id in ( select friend.friend_id from friend where friend.account_id = ?1) ) as mutualFriends \n" +
-            " from account \n" +
-            " left join friend on account.id = friend.friend_id \n" +
-            " where account.full_name like ?2 and account.id != ?1", nativeQuery = true)
+            " left join friend on account.id = friend.account_id where account.full_name like ?2 and account.id <> ?1 group by account.id", nativeQuery = true)
     List<FriendDTO> searchAddFriends(Integer id, String name);
 }

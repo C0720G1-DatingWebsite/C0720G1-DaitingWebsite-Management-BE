@@ -5,6 +5,7 @@ public class CreatePostDTO {
     Integer idPolicy;
     String contentPost;
     String image;
+    Integer idGroup;
 
     public CreatePostDTO() {
     }
@@ -39,5 +40,13 @@ public class CreatePostDTO {
 
     public void setImagePost(String imagePost) {
         this.image = imagePost;
+    }
+
+    public Integer getIdGroup() {
+        return idGroup;
+    }
+
+    public void setIdGroup(Integer idGroup) {
+        this.idGroup = idGroup;
     }
 }

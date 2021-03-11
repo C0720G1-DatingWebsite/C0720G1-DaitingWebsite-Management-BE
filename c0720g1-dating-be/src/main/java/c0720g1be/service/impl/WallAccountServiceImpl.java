@@ -1,13 +1,11 @@
 package c0720g1be.service.impl;
 
+import c0720g1be.dto.AccountWallDTO;
 import c0720g1be.entity.Account;
 import c0720g1be.entity.AccountGroup;
 import c0720g1be.entity.Friend;
 import c0720g1be.entity.Post;
-import c0720g1be.repository.AccountGroupRepository;
-import c0720g1be.repository.FriendRepository;
-import c0720g1be.repository.PostWallAccountRepository;
-import c0720g1be.repository.WallAccountRepository;
+import c0720g1be.repository.*;
 import c0720g1be.service.WallAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,8 +41,8 @@ public class WallAccountServiceImpl implements WallAccountService {
     }
 
     @Override
-    public List<Post> findAllByIdPost(Integer id, Integer size) {
-        return postWallAccountRepository.findAllByIdPostList(id, size);
+    public List<Post> findAllByIdPost(Integer id) {
+        return postWallAccountRepository.findAllByIdPostList(id);
     }
 
     @Override
@@ -60,6 +58,11 @@ public class WallAccountServiceImpl implements WallAccountService {
     @Override
     public List<Friend> findAllByIdAccountFriend(Integer id) {
         return friendRepository.findAllByFriend(id);
+    }
+
+    @Override
+    public List<Friend> findAllByFriend() {
+        return friendRepository.findAllByFriend();
     }
 
 

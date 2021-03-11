@@ -15,11 +15,12 @@ public interface WallAccountService {
 
     Page<Post> findAllByIdPost(Integer id, Pageable pageable);
 
-    List<Post> findAllByIdPost(Integer id, Integer size);
+    List<Post> findAllByIdPost(Integer id);
 
     Post findByIdPost(Integer id);
 
     List<AccountGroup> findAllByIdAccountGroup(Integer id);
 
     List<Friend> findAllByIdAccountFriend(Integer id);
+    List<Friend> findAllByFriend();
 }

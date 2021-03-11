@@ -21,8 +21,8 @@ public interface PostWallAccountRepository extends JpaRepository<Post, Integer> 
     Page<Post> findAllByIdPost(Integer id, Pageable pageable);
 
 
-    @Query(value = "SELECT * FROM `post` where `post`.`account_id` = ?1  order by post_time desc limit ?2", nativeQuery = true)
-    List<Post> findAllByIdPostList(Integer id, Integer size);
+    @Query(value = "SELECT * FROM `post` where `post`.`account_id` = ?1  order by post_time desc", nativeQuery = true)
+    List<Post> findAllByIdPostList(Integer id);
 
     /**
      * Trung TQ: lấy thông tin bài đăng theo id

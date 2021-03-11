@@ -37,6 +37,17 @@ public class UpdatePostController {
         return false;
     }
 
+    @RequestMapping(value = "/create-post-group", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean createPostGroup(@RequestBody CreatePostDTO postDTO) {
+        if (postDTO != null) {
+            if (iCreatePostService.createPostGroup(postDTO)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Võ Thành Tín: Get All Policy
